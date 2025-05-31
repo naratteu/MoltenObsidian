@@ -1,12 +1,22 @@
+env:
+  PUBLISH_DIR: Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm/bin/Release/net8.0/publish/wwwroot
 on:
   push:
-    branches: [ "gh-pages" ]
+    branches:
+      - gh-pages
+  workflow_dispatch:
 permissions:
   contents: read
   pages: write
   id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,22 +25,15 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - uses: na1307/blazor-github-pages@v2
-        id: prepare
+      - name: Publish app
+        run: dotnet publish Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm
+      - uses: SteveSandersonMS/ghaction-rewrite-base-href@5b54862a8831e012d4f1a8b2660894415fdde8ec # v1.1.0
         with:
-          project-path: Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm/Nodsoft.MoltenObsidian.Samples.HttpWasm.csproj
-          main-repo: false
-          fix-404: true
+          html_path: ${{ env.PUBLISH_DIR }}/index.html
+          base_href: /MoltenObsidian/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ steps.prepare.outputs.wwwroot-path }}
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+          path: ${{ env.PUBLISH_DIR }}
       - uses: actions/deploy-pages@v4
         id: deployment
