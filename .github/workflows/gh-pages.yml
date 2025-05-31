@@ -13,10 +13,11 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - uses: na1307/blazor-github-pages@v3
+      - uses: na1307/blazor-github-pages@v2
         id: prepare
         with:
           project-path: Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm/Nodsoft.MoltenObsidian.Samples.HttpWasm.csproj
+          main-repo: false
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
