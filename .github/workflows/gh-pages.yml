@@ -20,6 +20,7 @@ jobs:
         with:
           project-path: Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm/Nodsoft.MoltenObsidian.Samples.HttpWasm.csproj
           main-repo: false
+          fix-404: false
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
