@@ -7,7 +7,7 @@
 
 @if (VaultTask.IsCompletedSuccessfully)
 {
-    <ObsidianVaultDisplay Vault="@VaultTask.Result" BasePath="@this.GetCallingBaseVaultPath()" CurrentPath="@VaultPath" />
+    <ObsidianVaultDisplay Vault="@VaultTask.Result" BasePath="/MoltenObsidian/" CurrentPath="@VaultPath" />
 }
 
 @code {
