@@ -25,8 +25,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - name: Publish app
-        run: dotnet publish Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm
+      - run: dotnet publish Samples/Nodsoft.MoltenObsidian.Samples.HttpWasm
       - uses: SteveSandersonMS/ghaction-rewrite-base-href@5b54862a8831e012d4f1a8b2660894415fdde8ec # v1.1.0
         with:
           html_path: ${{ env.PUBLISH_DIR }}/index.html
